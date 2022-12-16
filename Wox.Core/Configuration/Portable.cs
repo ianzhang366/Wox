@@ -142,7 +142,7 @@ namespace Wox.Core.Configuration
 
         internal void IndicateDeletion(string filePathTodelete)
         {
-            using (StreamWriter sw = File.CreateText(filePathTodelete + "\\" + DataLocation.DeletionIndicatorFile)){}
+            using (StreamWriter sw = File.CreateText(filePathTodelete + "\\" + DataLocation.DeletionIndicatorFile)) { }
         }
 
         ///<summary>
@@ -180,7 +180,7 @@ namespace Wox.Core.Configuration
                 return;
             }
 
-            if(DataLocationPortableDeleteRequired)
+            if (DataLocationPortableDeleteRequired)
             {
                 FilesFolders.RemoveFolderIfExists(portableDataPath);
 
@@ -196,10 +196,10 @@ namespace Wox.Core.Configuration
             var roamingLocationExists = DataLocation.RoamingDataPath.LocationExists();
             var portableLocationExists = DataLocation.PortableDataPath.LocationExists();
 
-            if(roamingLocationExists && portableLocationExists)
+            if (roamingLocationExists && portableLocationExists)
             {
                 MessageBox.Show(string.Format("Wox detected your user data exists both in {0} and " +
-                                    "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occured.", 
+                                    "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occured.",
                                     DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 
                 return false;

@@ -60,6 +60,8 @@ namespace Wox.Infrastructure.Storage
         {
             //http://stackoverflow.com/questions/2120055/binaryformatter-deserialize-gives-serializationexception
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            // Disable the warning.
+#pragma warning disable SYSLIB0011
             BinaryFormatter binaryFormatter = new BinaryFormatter
             {
                 AssemblyFormat = FormatterAssemblyStyle.Simple

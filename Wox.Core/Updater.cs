@@ -13,9 +13,7 @@ using Wox.Core.Resource;
 using Wox.Infrastructure;
 using Wox.Infrastructure.Http;
 using Wox.Infrastructure.Logger;
-using System.IO;
 using NLog;
-using Wox.Infrastructure.UserSettings;
 
 namespace Wox.Core
 {

@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Ipc;
 using System.Runtime.Serialization.Formatters;
+using System.Runtime.Remoting.Channels.Ipc;
 using System.Security;
 using System.Text;
 using System.Threading;
@@ -16,7 +14,7 @@ using System.Windows.Threading;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
 // modified to allow single instace restart
-namespace Wox.Helper 
+namespace Wox.Helper
 {
     internal enum WM
     {
@@ -182,12 +180,12 @@ namespace Wox.Helper
             }
         }
 
-    } 
+    }
 
-    public interface ISingleInstanceApp 
-    { 
+    public interface ISingleInstanceApp
+    {
         void OnSecondAppStarted(IList<string> args);
-    } 
+    }
 
     /// <summary>
     /// This class checks to make sure that only one instance of 
@@ -200,9 +198,9 @@ namespace Wox.Helper
     /// running as Administrator, can activate it with command line arguments.
     /// For most apps, this will not be much of an issue.
     /// </remarks>
-    public static class SingleInstance<TApplication>  
-                where   TApplication: Application ,  ISingleInstanceApp 
-                                    
+    public static class SingleInstance<TApplication>
+                where TApplication : Application, ISingleInstanceApp
+
     {
         #region Private Fields
 
@@ -262,7 +260,7 @@ namespace Wox.Helper
         /// If not, activates the first instance.
         /// </summary>
         /// <returns>True if this is the first instance of the application.</returns>
-        public static bool InitializeAsFirstInstance( string uniqueName )
+        public static bool InitializeAsFirstInstance(string uniqueName)
         {
             commandLineArgs = GetCommandLineArgs(uniqueName);
             commandLineArgs.RemoveAt(0);
@@ -309,7 +307,7 @@ namespace Wox.Helper
         /// Gets command line args - for ClickOnce deployed applications, command line args may not be passed directly, they have to be retrieved.
         /// </summary>
         /// <returns>List of command line arg strings.</returns>
-        private static IList<string> GetCommandLineArgs( string uniqueApplicationName )
+        private static IList<string> GetCommandLineArgs(string uniqueApplicationName)
         {
             string[] args = null;
             if (AppDomain.CurrentDomain.ActivationContext == null)
