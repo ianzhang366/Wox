@@ -28,7 +28,7 @@ namespace Wox.Plugin.Shell
 
         private readonly Settings _settings;
         private readonly PluginJsonStorage<Settings> _storage;
-        
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public Main()
@@ -177,7 +177,7 @@ namespace Wox.Plugin.Shell
             if (_settings.Shell == Shell.Cmd)
             {
                 var arguments = _settings.LeaveShellOpen ? $"/k \"{command}\"" : $"/c \"{command}\" & pause";
-                
+
                 info = ShellCommand.SetProcessStartInfo("cmd.exe", workingDirectory, arguments, runAsAdministratorArg);
             }
             else if (_settings.Shell == Shell.Powershell)
@@ -191,8 +191,13 @@ namespace Wox.Plugin.Shell
                 {
                     arguments = $"\"{command} ; Read-Host -Prompt \\\"Press Enter to continue\\\"\"";
                 }
+                // C:\Program Files\WindowsApps\Microsoft.PowerShell_7.2.3.0_x64__8wekyb3d8bbwe\pwsh.exe
 
-                info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
+                // info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
+                Console.WriteLine(workingDirectory);
+                Logger.Info($"Exception when query for <{workingDirectory}>");
+                _context.API.ShowMsg("ian", workingDirectory);
+                info = ShellCommand.SetProcessStartInfo("pwsh.exe", workingDirectory, arguments, runAsAdministratorArg);
             }
             else if (_settings.Shell == Shell.RunCommand)
             {
@@ -245,11 +250,11 @@ namespace Wox.Plugin.Shell
             return info;
         }
 
-        private void Execute(Func<ProcessStartInfo, Process> startProcess,ProcessStartInfo info)
+        private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
             try
             {
-                startProcess(info);                
+                startProcess(info);
             }
             catch (FileNotFoundException e)
             {
@@ -257,7 +262,7 @@ namespace Wox.Plugin.Shell
                 var message = $"Command not found: {e.Message}";
                 _context.API.ShowMsg(name, message);
             }
-            catch(Win32Exception e)
+            catch (Win32Exception e)
             {
                 var name = "Plugin: Shell";
                 var message = $"Error running the command: {e.Message}";
