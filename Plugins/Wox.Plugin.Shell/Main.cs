@@ -185,18 +185,17 @@ namespace Wox.Plugin.Shell
                 string arguments;
                 if (_settings.LeaveShellOpen)
                 {
-                    arguments = $"-NoExit \"{command}\"";
+                    arguments = $"-NoExit -command \"{command}\"";
                 }
                 else
                 {
-                    arguments = $"\"{command} ; Read-Host -Prompt \\\"Press Enter to continue\\\"\"";
+                    arguments = $"-command \"{command}\"";
                 }
                 // C:\Program Files\WindowsApps\Microsoft.PowerShell_7.2.3.0_x64__8wekyb3d8bbwe\pwsh.exe
 
                 // info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
                 Console.WriteLine(workingDirectory);
                 Logger.Info($"Exception when query for <{workingDirectory}>");
-                _context.API.ShowMsg("ian", workingDirectory);
                 info = ShellCommand.SetProcessStartInfo("pwsh.exe", workingDirectory, arguments, runAsAdministratorArg);
             }
             else if (_settings.Shell == Shell.RunCommand)
